@@ -2,5 +2,18 @@
 name = "lightness-curve"
 version = "0.1.0"
 edition = "2024"
+authors = ["Garth TB <g-art-h@outlook.com>"]
+description = "Plots brightness curve for photos/video frames (entire or ROI)."
+repository = "https://github.com/GarthTB/lightness-curve"
+keywords = ["image", "video", "brightness", "plot"]
+categories = ["command-line-utilities"]
+license = "Apache-2.0"
+readme = "README.md"
 
 [dependencies]
+anyhow = "1.0.98"
+serde = { version = "1.0.219", features = ["derive"] }
+toml = { version = "0.8.22", default-features = false, features = ["parse"] }
+
+[profile.release]
+lto = true
