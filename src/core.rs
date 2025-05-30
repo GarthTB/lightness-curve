@@ -1,0 +1,31 @@
+use crate::config::Config;
+use std::path::PathBuf;
+use std::time::Instant;
+
+pub(crate) fn run() -> Result<f32, anyhow::Error> {
+    let time = Instant::now();
+    println!("载入配置文件...");
+    let config = Config::load()?;
+    println!("载入成功！");
+    let input_paths = config.get_ordered_input_paths()?;
+    let lightness_values = match input_paths.len() {
+        1 => get_vid_vals(&config, &input_paths[0])?,
+        _ => get_img_vals(&config, input_paths)?,
+    };
+    println!("计算完成！输出结果...");
+    output_data(config, lightness_values)?;
+    println!("输出完成！");
+    Ok(time.elapsed().as_secs_f32())
+}
+
+fn get_img_vals(config: &Config, image_paths: Vec<PathBuf>) -> Result<Vec<f32>, anyhow::Error> {
+    todo!()
+}
+
+fn get_vid_vals(config: &Config, video_path: &PathBuf) -> Result<Vec<f32>, anyhow::Error> {
+    todo!()
+}
+
+fn output_data(config: Config, lightness_values: Vec<f32>) -> Result<(), anyhow::Error> {
+    todo!()
+}
