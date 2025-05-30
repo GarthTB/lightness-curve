@@ -1,12 +1,12 @@
 input_path = "C:/test/input_images"  # 输入图像目录或视频文件的绝对路径
-order_by = 0  # 输入图像的重排序方式；对视频无效（可注释掉）；0：文件名，1：创建时间，2：修改时间
-descending = false  # 是否按倒序重排序；不重排序时无效（可注释掉）
-# start_frame = 0  # 待测视频片段的起始帧号；对图像无效；若无需截取视频片段，可注释掉
-# frame_count = 0  # 待测视频片段的帧数；对图像无效；若无需截取视频片段，可注释掉
+order_by = 0  # 输入图像的重排序方式；对视频无效，可注释掉；0：文件名，1：创建时间，2：修改时间
+descending = false  # 是否按降序重排序；对视频无效，可注释掉
+# start_frame = 0  # 被测视频片段的起始帧号；对图像无效；若无需截取视频片段，可注释掉
+# frame_count = 0  # 被测视频片段的帧数；对图像无效；若无需截取视频片段，可注释掉
 channel = 0  # 被测通道；0：RGB总和，1：R，2：G，3：B
 # top_left_x = 0  # ROI的左上角x坐标；若无需截取ROI，可注释掉
 # top_left_y = 0  # ROI的左上角y坐标；若无需截取ROI，可注释掉
 # width = 0  # ROI的宽度；若无需截取ROI，可注释掉
 # height = 0  # ROI的高度；若无需截取ROI，可注释掉
-output_plot_path = "C:/test/output_plot.svg"  # 输出曲线图像的绝对路径；若无需输出曲线图像，可注释掉
 output_data_path = "C:/test/output_data.csv"  # 输出数据文件的绝对路径；若无需输出数据文件，可注释掉
+output_plot_path = "C:/test/output_plot.svg"  # 输出曲线图像的绝对路径；若无需输出曲线图像，可注释掉
