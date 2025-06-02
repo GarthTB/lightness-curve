@@ -1,5 +1,6 @@
 use crate::output_generator;
 use anyhow::{Context, Error, anyhow};
+use image::DynamicImage;
 use std::env::current_exe;
 use std::fs::{File, read_to_string, remove_file};
 use std::io::Write;
@@ -21,13 +22,13 @@ pub(crate) struct Config {
     /// 被测通道；0：RGB总和，1：R，2：G，3：B
     channel: u8,
     /// ROI的左上角x坐标；若无需截取ROI，可为None
-    top_left_x: Option<usize>,
+    top_left_x: Option<u32>,
     /// ROI的左上角y坐标；若无需截取ROI，可为None
-    top_left_y: Option<usize>,
+    top_left_y: Option<u32>,
     /// ROI的宽度；若无需截取ROI，可为None
-    width: Option<usize>,
+    width: Option<u32>,
     /// ROI的高度；若无需截取ROI，可为None
-    height: Option<usize>,
+    height: Option<u32>,
     /// 输出数据文件的绝对路径；若无需输出数据文件，可为None
     output_data_path: Option<String>,
     /// 输出折线图的绝对路径；若无需输出折线图，可为None
@@ -74,6 +75,23 @@ impl Config {
             }
         } else {
             Err(anyhow!("输入路径错误"))
+        }
+    }
+
+    pub(crate) fn get_image_roi(&self, image: DynamicImage) -> DynamicImage {
+        match (self.top_left_x, self.top_left_y, self.width, self.height) {
+            (Some(x), Some(y), Some(w), Some(h)) => image.crop_imm(x, y, w, h),
+            _ => image,
+        }
+    }
+
+    pub(crate) fn rgb_to_lightness(&self, r: f32, g: f32, b: f32) -> f32 {
+        match self.channel {
+            0 => (r + g + b) / 3.0,
+            1 => r,
+            2 => g,
+            3 => b,
+            _ => panic!("未指定有效的通道"),
         }
     }
 

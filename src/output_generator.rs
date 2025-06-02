@@ -14,8 +14,6 @@ pub(crate) fn gen_chart(values: Vec<f32>) -> Result<String, Error> {
     let max_value = values.iter().cloned().fold(f32::NEG_INFINITY, f32::max);
     let min_value = values.iter().cloned().fold(f32::INFINITY, f32::min);
     let range = max_value - min_value;
-    let max_y = max_value + range * 0.1;
-    let min_y = min_value - range * 0.1;
 
     let indexes: Vec<String> = (1..=values.len()).map(|i| format!("{i}")).collect();
     let series = Series::new("Lightness".to_string(), values);
@@ -28,8 +26,8 @@ pub(crate) fn gen_chart(values: Vec<f32>) -> Result<String, Error> {
     chart.title_text = "Lightness Curve".to_string();
     chart.legend_show = Some(false);
     chart.x_boundary_gap = Some(false);
-    chart.y_axis_configs[0].axis_min = Some(min_y);
-    chart.y_axis_configs[0].axis_max = Some(max_y);
+    chart.y_axis_configs[0].axis_max = Some(max_value + range * 0.1);
+    chart.y_axis_configs[0].axis_min = Some(min_value - range * 0.1);
 
     chart.svg().context("无法生成 SVG 图")
 }

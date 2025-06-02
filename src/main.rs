@@ -1,5 +1,6 @@
 mod config;
 mod core;
+mod image_utils;
 mod output_generator;
 
 fn main() {
