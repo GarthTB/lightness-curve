@@ -1,6 +1,8 @@
+use crate::output_generator;
 use anyhow::{Context, Error, anyhow};
 use std::env::current_exe;
-use std::fs::read_to_string;
+use std::fs::{File, read_to_string, remove_file};
+use std::io::Write;
 use std::path::{Path, PathBuf};
 
 /// 从config.toml中读取的配置信息及其相关操作
@@ -27,9 +29,9 @@ pub(crate) struct Config {
     /// ROI的高度；若无需截取ROI，可为None
     height: Option<usize>,
     /// 输出数据文件的绝对路径；若无需输出数据文件，可为None
-    pub(crate) output_data_path: Option<String>,
-    /// 输出曲线图像的绝对路径；若无需输出曲线图像，可为None
-    pub(crate) output_plot_path: Option<String>,
+    output_data_path: Option<String>,
+    /// 输出折线图的绝对路径；若无需输出折线图，可为None
+    output_plot_path: Option<String>,
 }
 
 impl Config {
@@ -73,5 +75,39 @@ impl Config {
         } else {
             Err(anyhow!("输入路径错误"))
         }
+    }
+
+    pub(crate) fn output_values(&self, lightness_values: Vec<f32>) -> Result<(), Error> {
+        match &self.output_data_path {
+            None => println!("未指定输出数据文件路径，无需输出。"),
+            Some(path) => {
+                println!("输出数据文件...");
+                let report = output_generator::gen_report(&lightness_values);
+                if Path::new(path).exists() {
+                    println!("指定的路径存在文件，将覆盖。");
+                    remove_file(&path).context("无法删除该同名文件")?;
+                }
+                File::create(path)
+                    .context("无法创建输出数据文件")?
+                    .write_all(report.as_bytes())
+                    .context("无法写入输出数据文件")?;
+            }
+        }
+        match &self.output_plot_path {
+            None => println!("未指定输出折线图路径，无需输出。"),
+            Some(path) => {
+                println!("输出折线图...");
+                let chart = output_generator::gen_chart(lightness_values)?;
+                if Path::new(path).exists() {
+                    println!("指定的路径存在文件，将覆盖。");
+                    remove_file(&path).context("无法删除该同名文件")?;
+                }
+                File::create(path)
+                    .context("无法创建输出折线图文件")?
+                    .write_all(chart.as_bytes())
+                    .context("无法写入输出折线图文件")?;
+            }
+        }
+        Ok(())
     }
 }

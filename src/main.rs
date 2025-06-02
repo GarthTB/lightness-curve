@@ -1,5 +1,6 @@
 mod config;
 mod core;
+mod output_generator;
 
 fn main() {
     println!(
