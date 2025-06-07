@@ -15,7 +15,7 @@ pub(crate) struct Config {
     order_by: u8,
     /// 是否按降序重排序
     descending: bool,
-    /// 亮度衡量方法；0：RGB总和，1：R，2：G，3：B
+    /// 亮度衡量方法；0：RGB总和，1：RGB视觉加权明度，2：R，3：G，4：B，5：H，6：S，7：V
     mode: u8,
     /// ROI的左上角x坐标；若无需截取ROI，可为None
     top_left_x: Option<u32>,
@@ -77,9 +77,33 @@ impl Config {
     pub(crate) fn rgb_to_lightness(&self, r: f32, g: f32, b: f32) -> f32 {
         match self.mode {
             0 => (r + g + b) / 3.0,
-            1 => r,
-            2 => g,
-            3 => b,
+            1 => r * 0.2126729 + g * 0.7151522 + b * 0.0721750,
+            2 => r,
+            3 => g,
+            4 => b,
+            5 => {
+                let max = r.max(g).max(b);
+                let min = r.min(g).min(b);
+                let delta = max - min;
+                let h = if delta == 0.0 {
+                    0.0
+                } else if max == r {
+                    60.0 * (g - b) / delta
+                } else if max == g {
+                    60.0 * (b - r) / delta + 120.0
+                } else {
+                    60.0 * (r - g) / delta + 240.0
+                };
+                let h = if h < 0.0 { h + 360.0 } else { h };
+                h / 360.0
+            }
+            6 => {
+                let max = r.max(g).max(b);
+                let min = r.min(g).min(b);
+                let delta = max - min;
+                if delta == 0.0 { 0.0 } else { delta / max }
+            }
+            7 => r.max(g).max(b),
             _ => panic!("未指定有效的通道"),
         }
     }
