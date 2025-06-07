@@ -5,7 +5,7 @@ pub(crate) fn gen_report(values: &Vec<f32>) -> String {
     values
         .into_iter()
         .enumerate()
-        .map(|(i, v)| format!("{i}\t{v}"))
+        .map(|(i, v)| format!("{}\t{v}", i + 1))
         .collect::<Vec<String>>()
         .join("\n")
 }
