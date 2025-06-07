@@ -1,11 +1,11 @@
 [package]
 name = "lightness-curve"
-version = "0.1.0"
+version = "0.2.0"
 edition = "2024"
 authors = ["Garth TB <g-art-h@outlook.com>"]
-description = "Plots brightness curve for a set of photos (entire or ROI)."
+description = "Plots lightness curve for a set of photos (entire or ROI)."
 repository = "https://github.com/GarthTB/lightness-curve"
-keywords = ["image", "photo", "brightness", "plot"]
+keywords = ["image", "photo", "lightness", "plot"]
 categories = ["command-line-utilities"]
 license = "Apache-2.0"
 readme = "README.md"

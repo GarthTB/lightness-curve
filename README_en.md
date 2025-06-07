@@ -3,7 +3,7 @@
 [![README English](https://img.shields.io/badge/README-English-blue)](https://github.com/GarthTB/lightness-curve/blob/master/README_en.md)
 [![用前必读 中文](https://img.shields.io/badge/用前必读-中文-red)](https://github.com/GarthTB/lightness-curve/blob/master/README.md)
 [![Built with Rust](https://img.shields.io/badge/Built%20with-Rust-brown)](https://www.rust-lang.org)
-[![Latest Release 0.1.0](https://img.shields.io/badge/Latest%20Release-0.1.0-brightgreen)](https://github.com/GarthTB/lightness-curve/releases/latest)
+[![Latest Release 0.2.0](https://img.shields.io/badge/Latest%20Release-0.2.0-brightgreen)](https://github.com/GarthTB/lightness-curve/releases/latest)
 [![License Apache 2.0](https://img.shields.io/badge/License-Apache%202.0-royalblue)](https://www.apache.org/licenses/LICENSE-2.0)
 
 A lightweight, high-performance tool built with Rust for analyzing lightness changes in an ROI or the entire frame
@@ -79,6 +79,12 @@ Image information: 3840x2160, 8-bit RGB 3-channel TIFF, ZIP compressed, each ima
 - Cannot process RAW format images, must be converted to common formats first
 
 ## Changelog
+
+### v0.2.0 (2025-06-08)
+
+- Fixed: Alpha channel processing error
+- Fixed: Reading output file as input images
+- Optimized: Increased SVG line chart width
 
 ### v0.1.0 (2025-06-07)
 

@@ -3,7 +3,7 @@
 [![README English](https://img.shields.io/badge/README-English-blue)](https://github.com/GarthTB/lightness-curve/blob/master/README_en.md)
 [![用前必读 中文](https://img.shields.io/badge/用前必读-中文-red)](https://github.com/GarthTB/lightness-curve/blob/master/README.md)
 [![开发语言 Rust](https://img.shields.io/badge/开发语言-Rust-brown)](https://www.rust-lang.org)
-[![最新版本 0.1.0](https://img.shields.io/badge/最新版本-0.1.0-brightgreen)](https://github.com/GarthTB/lightness-curve/releases/latest)
+[![最新版本 0.2.0](https://img.shields.io/badge/最新版本-0.2.0-brightgreen)](https://github.com/GarthTB/lightness-curve/releases/latest)
 [![开源许可 Apache 2.0](https://img.shields.io/badge/开源许可-Apache%202.0-royalblue)](https://www.apache.org/licenses/LICENSE-2.0)
 
 用Rust编写的轻量级高性能工具，用于分析图像序列中特定区域或全图的亮度变化，支持多种色彩空间指标，结果可导出为CSV数据或SVG折线图。
@@ -77,6 +77,12 @@ output_plot_path = "C:/test/output_plot.svg"  # 输出折线图的路径；若�
 - 不能处理RAW格式图像，需先转换为常用格式
 
 ## 更新日志
+
+### v0.2.0 (2025-06-08)
+
+- 修复：Alpha通道处理错误
+- 修复：将输出文件读取为待测图像的错误
+- 优化：加长SVG折线图的长度
 
 ### v0.1.0 (2025-06-07)
 
