@@ -17,7 +17,7 @@ across an image sequence. Supports multiple color space metrics, with results ex
 - 🖼️ Wide format support: supports JPEG, PNG, BMP, TIFF, and WebP formats
 - 🔍 ROI support: can analyze specific regions or the entire image
 - 🎚️ Multiple metrics support:
-    - RGB average (RGB Avg)
+    - RGB average
     - Visual weighted luminance (Luminance)
     - Individual channels (R, G, B)
     - HSV color space (Hue, Saturation, Value)
@@ -44,7 +44,7 @@ Create a `config.toml` file in the same directory as the program, with the follo
 image_dir = "C:/test/input_images"  # Directory containing the input images
 order_by = 0  # Order of the input images; 0: filename, 1: creation time, 2: modification time
 descending = false  # Whether to sort the input images in descending order
-mode = 0  # The metric to be analyzed; 0: RGB sum, 1: visual weighted luminance, 2: R, 3: G, 4: B, 5: H, 6: S, 7: V
+mode = 0  # The metric to be analyzed; 0: RGB average, 1: visual weighted luminance, 2: R, 3: G, 4: B, 5: H, 6: S, 7: V
 # top_left_x = 0  # The x coordinate of the top-left corner of the ROI; if no ROI is needed, comment out this line
 # top_left_y = 0  # The y coordinate of the top-left corner of the ROI; if no ROI is needed, comment out this line
 # width = 0  # The width of the ROI; if no ROI is needed, comment out this line
@@ -67,11 +67,11 @@ Image information: 3840x2160, 8-bit RGB 3-channel TIFF, ZIP compressed, each ima
 
 | Image count |  ROI size  | Metric  | Processing time (seconds) |
 |:-----------:|:----------:|:-------:|:-------------------------:|
-|     100     | Full image | RGB sum |           3.28            |
+|     100     | Full image | RGB avg |           3.28            |
 |     100     | Full image |    H    |           3.35            |
-|     100     | 1920x1080  | RGB sum |           3.21            |
-|     624     | Full image | RGB sum |           22.70           |
-|     624     | 1920x1080  | RGB sum |           23.67           |
+|     100     | 1920x1080  | RGB avg |           3.21            |
+|     624     | Full image | RGB avg |           22.70           |
+|     624     | 1920x1080  | RGB avg |           23.67           |
 
 ## Notes
 

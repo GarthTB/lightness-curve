@@ -15,7 +15,7 @@ pub(crate) struct Config {
     order_by: u8,
     /// 是否按降序重排序
     descending: bool,
-    /// 待测指标；0：RGB总和，1：RGB视觉加权明度，2：R，3：G，4：B，5：H，6：S，7：V
+    /// 待测指标；0：RGB平均值，1：RGB视觉加权明度，2：R，3：G，4：B，5：H，6：S，7：V
     mode: u8,
     /// ROI的左上角x坐标；若无需截取ROI，可为None
     top_left_x: Option<u32>,
@@ -85,7 +85,7 @@ impl Config {
         }
     }
 
-    pub(crate) fn rgb_to_lightness(&self, r: f32, g: f32, b: f32) -> f32 {
+    pub(crate) fn get_target_value(&self, r: f32, g: f32, b: f32) -> f32 {
         match self.mode {
             0 => (r + g + b) / 3.0,
             1 => r * 0.2126729 + g * 0.7151522 + b * 0.0721750,
@@ -119,12 +119,12 @@ impl Config {
         }
     }
 
-    pub(crate) fn output_values(&self, lightness_values: Vec<f32>) -> Result<(), Error> {
+    pub(crate) fn output_values(&self, values: Vec<f32>) -> Result<(), Error> {
         match &self.output_data_path {
             None => println!("未指定输出数据文件路径，无需输出。"),
             Some(path) => {
                 println!("输出数据文件...");
-                let report = output_generator::gen_report(&lightness_values);
+                let report = output_generator::gen_report(&values);
                 if Path::new(path).exists() {
                     println!("指定的路径存在文件，将覆盖。");
                     remove_file(&path).context("无法删除该同名文件")?;
@@ -139,7 +139,7 @@ impl Config {
             None => println!("未指定输出折线图路径，无需输出。"),
             Some(path) => {
                 println!("输出折线图...");
-                let chart = output_generator::gen_chart(lightness_values)?;
+                let chart = output_generator::gen_chart(values)?;
                 if Path::new(path).exists() {
                     println!("指定的路径存在文件，将覆盖。");
                     remove_file(&path).context("无法删除该同名文件")?;

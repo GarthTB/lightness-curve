@@ -35,7 +35,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                     let r = p[0] as f32 / 255.0;
                     let g = p[1] as f32 / 255.0;
                     let b = p[2] as f32 / 255.0;
-                    config.rgb_to_lightness(r, g, b)
+                    config.get_target_value(r, g, b)
                 })
                 .sum();
             Ok(sum / (buf.len() / 3) as f32)
@@ -48,7 +48,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                     let r = p[0] as f32 / 255.0;
                     let g = p[1] as f32 / 255.0;
                     let b = p[2] as f32 / 255.0;
-                    config.rgb_to_lightness(r, g, b) * p[3] as f32 / 255.0
+                    config.get_target_value(r, g, b) * p[3] as f32 / 255.0
                 })
                 .sum();
             Ok(sum / (buf.len() / 4) as f32)
@@ -74,7 +74,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                     let r = p[0] as f32 / 65535.0;
                     let g = p[1] as f32 / 65535.0;
                     let b = p[2] as f32 / 65535.0;
-                    config.rgb_to_lightness(r, g, b)
+                    config.get_target_value(r, g, b)
                 })
                 .sum();
             Ok(sum / (buf.len() / 3) as f32)
@@ -87,7 +87,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                     let r = p[0] as f32 / 65535.0;
                     let g = p[1] as f32 / 65535.0;
                     let b = p[2] as f32 / 65535.0;
-                    config.rgb_to_lightness(r, g, b) * p[3] as f32 / 65535.0
+                    config.get_target_value(r, g, b) * p[3] as f32 / 65535.0
                 })
                 .sum();
             Ok(sum / (buf.len() / 4) as f32)
@@ -96,7 +96,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(3)
-                .map(|p| config.rgb_to_lightness(p[0], p[1], p[2]))
+                .map(|p| config.get_target_value(p[0], p[1], p[2]))
                 .sum();
             Ok(sum / (buf.len() / 3) as f32)
         }
@@ -104,7 +104,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(4)
-                .map(|p| config.rgb_to_lightness(p[0], p[1], p[2]) * p[3])
+                .map(|p| config.get_target_value(p[0], p[1], p[2]) * p[3])
                 .sum();
             Ok(sum / (buf.len() / 4) as f32)
         }

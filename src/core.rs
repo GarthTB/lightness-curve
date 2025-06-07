@@ -10,9 +10,9 @@ pub(crate) fn run() -> Result<f32, Error> {
     println!("载入成功！");
     let image_paths = config.get_ordered_image_paths()?;
     println!("共{}张图像。开始计算...", image_paths.len());
-    let lightness_values = image_utils::get_mean_vals(&config, image_paths)?;
+    let values = image_utils::get_mean_vals(&config, image_paths)?;
     println!("计算完成！");
-    config.output_values(lightness_values)?;
+    config.output_values(values)?;
     println!("输出完成！");
     Ok(time.elapsed().as_secs_f32())
 }
