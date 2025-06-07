@@ -15,7 +15,7 @@ pub(crate) struct Config {
     order_by: u8,
     /// 是否按降序重排序
     descending: bool,
-    /// 亮度衡量方法；0：RGB总和，1：RGB视觉加权明度，2：R，3：G，4：B，5：H，6：S，7：V
+    /// 待测指标；0：RGB总和，1：RGB视觉加权明度，2：R，3：G，4：B，5：H，6：S，7：V
     mode: u8,
     /// ROI的左上角x坐标；若无需截取ROI，可为None
     top_left_x: Option<u32>,

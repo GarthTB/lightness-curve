@@ -1,7 +1,7 @@
 image_dir = "C:/test/input_images"  # 待测图像所在文件夹
 order_by = 0  # 输入图像的重排序方式；0：文件名，1：创建时间，2：修改时间
 descending = false  # 是否按降序重排序
-mode = 0  # 亮度衡量方法；0：RGB总和，1：RGB视觉加权明度，2：R，3：G，4：B，5：H，6：S，7：V
+mode = 0  # 待测指标；0：RGB总和，1：RGB视觉加权明度，2：R，3：G，4：B，5：H，6：S，7：V
 # top_left_x = 0  # ROI的左上角x坐标；若无需截取ROI，可注释掉
 # top_left_y = 0  # ROI的左上角y坐标；若无需截取ROI，可注释掉
 # width = 0  # ROI的宽度；若无需截取ROI，可注释掉
