@@ -5,7 +5,6 @@ use rayon::prelude::*;
 use std::path::PathBuf;
 
 pub(crate) fn get_mean_vals(config: &Config, image_paths: Vec<PathBuf>) -> Result<Vec<f32>, Error> {
-    println!("计算{}张图像中，请稍候...", image_paths.len());
     image_paths
         .par_iter()
         .map(|path| get_mean_val(config, path))
