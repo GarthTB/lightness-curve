@@ -13,13 +13,13 @@ pub(crate) fn get_mean_vals(config: &Config, image_paths: Vec<PathBuf>) -> Resul
 
 fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
     let image = image::open(image_path).context("无法打开图像")?;
-    match config.get_image_roi(image) {
-        ImageLuma8(ref roi) => {
+    match &config.get_image_roi(image) {
+        ImageLuma8(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf.iter().map(|&p| p as f32 / 255.0).sum();
             Ok(sum / buf.len() as f32)
         }
-        ImageLumaA8(ref roi) => {
+        ImageLumaA8(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(2)
@@ -27,7 +27,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                 .sum();
             Ok(sum / (buf.len() / 2) as f32)
         }
-        ImageRgb8(ref roi) => {
+        ImageRgb8(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(3)
@@ -40,7 +40,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                 .sum();
             Ok(sum / (buf.len() / 3) as f32)
         }
-        ImageRgba8(ref roi) => {
+        ImageRgba8(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(4)
@@ -54,12 +54,12 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                 .sum();
             Ok(sum / (buf.len() / 4) as f32)
         }
-        ImageLuma16(ref roi) => {
+        ImageLuma16(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf.iter().map(|&p| p as f32 / 65535.0).sum();
             Ok(sum / buf.len() as f32)
         }
-        ImageLumaA16(ref roi) => {
+        ImageLumaA16(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(2)
@@ -67,7 +67,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                 .sum();
             Ok(sum / (buf.len() / 2) as f32)
         }
-        ImageRgb16(ref roi) => {
+        ImageRgb16(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(3)
@@ -80,7 +80,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                 .sum();
             Ok(sum / (buf.len() / 3) as f32)
         }
-        ImageRgba16(ref roi) => {
+        ImageRgba16(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(4)
@@ -94,7 +94,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                 .sum();
             Ok(sum / (buf.len() / 4) as f32)
         }
-        ImageRgb32F(ref roi) => {
+        ImageRgb32F(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(3)
@@ -102,7 +102,7 @@ fn get_mean_val(config: &Config, image_path: &PathBuf) -> Result<f32, Error> {
                 .sum();
             Ok(sum / (buf.len() / 3) as f32)
         }
-        ImageRgba32F(ref roi) => {
+        ImageRgba32F(roi) => {
             let buf = roi.as_raw();
             let sum: f32 = buf
                 .chunks_exact(4)

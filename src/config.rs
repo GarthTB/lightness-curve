@@ -45,17 +45,17 @@ impl Config {
             let read_dir = path.read_dir().context("无法读取图像目录")?;
             let mut paths: Vec<PathBuf> = read_dir
                 .filter_map(|entry| match entry {
-                    Ok(entry) => {
-                        if entry.path().is_file() {
-                            Some(entry.path())
-                        } else {
-                            None
-                        }
+                    Ok(entry)
+                        if entry.path().is_file()
+                            && entry.path().extension().unwrap_or_default() != "csv"
+                            && entry.path().extension().unwrap_or_default() != "svg" =>
+                    {
+                        Some(entry.path())
                     }
                     _ => None,
                 })
                 .collect();
-            match self.order_by {
+            match &self.order_by {
                 0 => paths.sort_by(|a, b| a.file_name().cmp(&b.file_name())),
                 1 => paths.sort_by(|a, b| {
                     let a_time = a.metadata().unwrap().created().unwrap();
@@ -86,7 +86,7 @@ impl Config {
     }
 
     pub(crate) fn get_target_value(&self, r: f32, g: f32, b: f32) -> f32 {
-        match self.mode {
+        match &self.mode {
             0 => (r + g + b) / 3.0,
             1 => r * 0.2126729 + g * 0.7151522 + b * 0.0721750,
             2 => r,
