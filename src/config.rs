@@ -43,7 +43,18 @@ impl Config {
         let path = Path::new(&self.image_dir);
         if path.is_dir() {
             let read_dir = path.read_dir().context("无法读取图像目录")?;
-            let mut paths: Vec<PathBuf> = read_dir.map(|entry| entry.unwrap().path()).collect();
+            let mut paths: Vec<PathBuf> = read_dir
+                .filter_map(|entry| match entry {
+                    Ok(entry) => {
+                        if entry.path().is_file() {
+                            Some(entry.path())
+                        } else {
+                            None
+                        }
+                    }
+                    _ => None,
+                })
+                .collect();
             match self.order_by {
                 0 => paths.sort_by(|a, b| a.file_name().cmp(&b.file_name())),
                 1 => paths.sort_by(|a, b| {
